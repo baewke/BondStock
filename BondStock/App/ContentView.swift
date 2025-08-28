@@ -25,7 +25,7 @@ struct ContentView: View {
     var body: some View {
         NavigationStack(path: $path) {
             VStack(spacing: 0) {
-                TopTabBar(selectedTab: $selectedTab)
+                TopTabBarView(selectedTab: $selectedTab)
                 
                 tabView
             }

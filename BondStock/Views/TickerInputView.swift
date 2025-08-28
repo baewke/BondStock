@@ -54,12 +54,16 @@ struct TickerInputView: View {
         .onChange(of: selectedTab) { _, newValue in
             if newValue != .input {
                 isTextFieldActive = false
+            } else {
+                Task {
+                    try? await Task.sleep(nanoseconds: 230_000_000)
+                    await MainActor.run {
+                        isTextFieldActive = true
+                    }
+                }
             }
         }
-        .task {
-            try? await Task.sleep(nanoseconds: 210_000_000)
-            isTextFieldActive = true
-        }
+        .animation(nil, value: appVM.keyboardHeight)
     }
     
     private var placeHolderText: some View {
@@ -85,7 +89,7 @@ struct TickerInputView: View {
                 .frame(height: 40)
                 .foregroundStyle(.primary)
                 .focused($isTextFieldActive)
-                .tint(.customPurple)
+                .tint(.customRed)
             
             searchButton
         }
